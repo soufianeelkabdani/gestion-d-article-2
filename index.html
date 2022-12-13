@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Gestion d'articles</title>
+</head>
+
+<body>
+    <form class="formulaire">
+        <h2>Nom</h2>
+        <input type="text" id="Nom">
+        <h2>Marque</h2>
+        <input type="text" id="Marque">
+        <h2>Prix</h2>
+        <input type="number" id="Prix">
+        <h2>Date de production</h2>
+        <input type="date" id="Dateproduction">
+        <h2>Type</h2>
+
+
+        <select class="options" id="Type">
+            <option value=""></option>
+            <option value="hygiène et toilette">hygiène et toilette</option>
+            <option value="soins esthétiques">soins esthétiques</option>
+            <option value="produits solaires">produits solaires</option>
+            <option value="beauté des mains et des pieds">beauté des mains et des pieds</option>
+            <option value="entretien capillaires">entretien capillaires</option>
+            <option value="parfums">parfums</option>
+        </select>
+
+        <h2>Promotion</h2>
+        <div class="promo">
+            <label>Oui</label>
+            <input class="check" type="radio" value="oui" name="M" id="Promotion1">
+            <label> Non </label>
+            <input class="check" type="radio" value="non" name="M" id="Promotion2">
+        </div>
+        <button class="submit">envoyer</button>
+        <p id="validno"></p>
+
+
+
+        <table class="table" id="product-list">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Marque</th>
+                    <th>Prix</th>
+                    <th>date de production</th>
+                    <th>Type</th>
+                    <th>Promotion</th>
+                    <th>Action</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody id="elements-list">
+            
+            </tbody>
+
+        </table>
+
+        <div id="mod" class="modal">
+            <div class="modal-content">
+                <span onclick="document.getElementById('mod').style.display='none'" class="close"
+                    title="Close Modal">×</span>
+                <h1>SUPPRIMER PRODUIT</h1>
+                <p>Voulez-vous vraiment supprimer ce produit ?</p>
+                <button type="button" onclick="cancel()" class="cancelbtn">Annuler</button>
+                <button type="button" id="realDelete" onclick="deletModel()" class="deletebtn">Supprimer</button>
+            </div>
+        </div>
+        <div id="info_modal">
+        
+        </div>
+    </form>
+
+    <script src="javaScript.js"></script>
+
+</body>
+
+</html>
