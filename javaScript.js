@@ -1,6 +1,9 @@
 const info_modal = document.getElementById("info_modal");
 let tableBody = document.querySelector("#elements-list");
 let dataPro = [];
+let moodSit = 'creatMood';
+let temp;
+let updProdu = document.querySelector('.submit');
 if (localStorage.product != null) {
   dataPro = JSON.parse(localStorage.product);
 }
@@ -25,6 +28,7 @@ const showData = () => {
     }
   }
   tableBody.innerHTML = table;
+
 };
 
 // Clear allFields
@@ -60,7 +64,7 @@ class Products {
     info_modal.appendChild(geti);
   }
 }
-document.querySelector(".formulaire").addEventListener("submit", (e) => {
+document.querySelector(".forme").addEventListener("submit", (e) => {
   e.preventDefault();
   if (e.target.classList.contains("check-item")) {
     checkItem();
@@ -71,7 +75,7 @@ document.querySelector(".formulaire").addEventListener("submit", (e) => {
   let prix = document.querySelector("#Prix").value;
   let date = document.querySelector("#Dateproduction").value;
   let type = document.querySelector("#Type").value;
-  let Promo = document.querySelector('input[name="M"]:checked').value;
+  let Promo = document.querySelector('input[name="M"]:checked');
   let reg = /^[a-zA-Z]{2,30}$/;
 
   // create object ( instance ) from products class
@@ -79,7 +83,7 @@ document.querySelector(".formulaire").addEventListener("submit", (e) => {
   dataObj.getInfo();
   // VALIDATE
   if (
-    
+
     reg.test(nom) === false ||
     reg.test(marque) === false ||
     prix === "" ||
@@ -89,42 +93,63 @@ document.querySelector(".formulaire").addEventListener("submit", (e) => {
     let valin = document.getElementById("validno");
     valin.innerText = "Essayez de remplir les éléments invalides ";
   } else {
-    dataPro.push(dataObj);
-    localStorage.setItem("product", JSON.stringify(dataPro));
-    showData(dataPro);
-    const deleteBtn = document.querySelector('.btnSup');
-    deleteBtn.addEventListener("click", (e) => {
-      target = e.target;
-      showModal()
-    });
+    if (moodSit === 'creatMood') {
+
+      dataPro.push(dataObj);
+      dataPro.sort((a, b) => a.Nom.localeCompare(b.Nom));
+      localStorage.setItem("product", JSON.stringify(dataPro));
+      showData(dataPro);
+      const deleteBtn = document.querySelector('.btnSup');
+      deleteBtn.addEventListener("click", (e) => {
+        target = e.target;
+        showModal()
+      })
+    } else {
+      dataPro[temp] = dataObj;
+      let modalIN = document.getElementById("info_modal");
+      modalIN.style.color = '#000'
+      modalIN.style.display = "block"
+      modalIN.innerHTML = `
+      <p>Nom:${nom}</p>
+      <p>Marque: ${marque}</p>
+      <p>Prix: ${prix}</p>
+      <p>Type: ${type}</p>
+      <p>promotion: ${Promo}</p>
+     <button id="info_modalBtn" onclick="modalClick()">ok</button>
+      `
+      localStorage.setItem("product", JSON.stringify(dataPro));
+
+      showData();
+    }
+    clearFields()
   }
-  nom.value = '';
-  marque.value = '';
-  prix.value = '';
-  date.value = '';
-  type.value = '';
-  document.getElementsById('promotion1').checked = false;
+
 });
+function modalClick() {
+  let modalIN = document.getElementById("info_modal");
+  modalIN.style.display = "none"
+}
 
 //  Edit Data
 function update(i) {
-  if (i.target.classList.contains("btnMod")) {
-    selectedRow = target.parentElement.parentElement;
-    document.querySelector("#Nom").value = dataPro[i];
-    document.querySelector("#Marque").value = dataPro[i];
-    document.querySelector("#Prix").value = dataPro[i];
-    document.querySelector("#Dateproduction").value = dataPro[i];
-    document.querySelector("#Type").value = dataPro[i];
-    document.querySelectorAll('input[name="M"]').value = dataPro[i];
-  }
+  document.querySelector("#Nom").value = dataPro[i].Nom;
+  document.querySelector("#Marque").value = dataPro[i].Marque;
+  document.querySelector("#Prix").value = dataPro[i].Prix;
+  document.querySelector("#Dateproduction").value = dataPro[i].date;
+  document.querySelector("#Type").value = dataPro[i].Type;
+  document.querySelectorAll('input[name="M"]').value = dataPro[i].promoValue;
+  temp = i;
+  moodSit = 'update';
+  updProdu.innerHTML = 'update';
 }
+
 // Show modal
 function showModal() {
   if (target.classList.contains("btnSup")) {
     target.parentElement.parentElement.setAttribute("id", "delet");
     let model = document.getElementById("mod");
     model.style.display = "block";
-  } 
+  }
 }
 
 let model = document.getElementById("mod");
@@ -140,4 +165,6 @@ function cancel() {
   document.getElementById("mod").style.display = "none";
   document.getElementById("delet").removeAttribute("id");
 }
+showData();
+
 

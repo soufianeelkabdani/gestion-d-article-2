@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <form class="formulaire">
+    <form class="forme">
         <h2>Nom</h2>
         <input type="text" id="Nom">
         <h2>Marque</h2>
@@ -20,8 +20,6 @@
         <h2>Date de production</h2>
         <input type="date" id="Dateproduction">
         <h2>Type</h2>
-
-
         <select class="options" id="Type">
             <option value=""></option>
             <option value="hygiène et toilette">hygiène et toilette</option>
@@ -35,15 +33,12 @@
         <h2>Promotion</h2>
         <div class="promo">
             <label>Oui</label>
-            <input class="check" type="radio" value="oui" name="M" id="Promotion1">
+            <input class="check" type="radio" value="oui" name="M" id="Promotion">
             <label> Non </label>
-            <input class="check" type="radio" value="non" name="M" id="Promotion2">
+            <input class="check" type="radio" value="non" name="M" id="Promotion">
         </div>
         <button class="submit">envoyer</button>
         <p id="validno"></p>
-
-
-
         <table class="table" id="product-list">
             <thead>
                 <tr>
@@ -61,7 +56,6 @@
             <tbody id="elements-list">
             
             </tbody>
-
         </table>
 
         <div id="mod" class="modal">
@@ -74,10 +68,9 @@
                 <button type="button" id="realDelete" onclick="deletModel()" class="deletebtn">Supprimer</button>
             </div>
         </div>
-        <div id="info_modal">
-        
-        </div>
     </form>
+    <div id="info_modal">
+    </div>
 
     <script src="javaScript.js"></script>
 
